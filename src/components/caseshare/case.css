@@ -1,0 +1,213 @@
+.caseTitle {
+    margin: 0 auto;
+    background-image: url('../../../public/images/case-bg.png');
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    width: 90%;
+}
+
+.caseTitle h2 {
+    color: #3F3350;
+    font-size: 32px;
+}
+
+
+
+.casecard {
+    width: 375px;
+    height: 450px;
+    /* 調整卡片的高度 */
+    perspective: 1000px;
+    /* 設定透視度 */
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 24px;
+
+}
+
+
+
+
+.casecard .flipper {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+
+}
+
+.casecard .flipper:hover {
+    transform: rotateY(180deg);
+    /* 翻轉效果 */
+}
+
+.casecard .front,
+.casecard .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.casecard .back {
+    transform: rotateY(180deg);
+    /* 添加背面樣式 */
+    background-color: #FFFEF9;
+    border: 1px solid #FFD740;
+    border-radius: 30px;
+}
+
+.casecard .front {
+    background-color: #FFFEF9;
+    border: 1px solid #FFD740;
+    border-radius: 30px;
+}
+
+
+.casecard p {
+    padding: 24px;
+}
+
+.caseimg {
+    width: 100%;
+    object-fit: cover;
+    height: 300px;
+    border-radius: 30px 30px 0px 0px;
+}
+
+.casecontent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentpeople {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.commentitem {
+    margin: 24px;
+
+}
+
+.caseicon {
+    width: 24px;
+    height: 24px;
+
+}
+
+.people {
+    width: 120px;
+    height: 120px;
+    margin: 16px;
+}
+
+.casecomment {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 24px;
+}
+
+
+.memberscoreOP {
+    width: 70%;
+    border: 1px solid #FFC107;
+    border-radius: 30px;
+    margin: 0 auto;
+
+}
+
+.memberscoreTop {
+    width: 100%;
+    height: 80px;
+    border-radius: 30px 30px 0px 0px;
+    padding: 0px 52px 0px 52px;
+    background-color: #FFF8E1;
+    color: #EAAC00;
+    font-size: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 80px;
+
+}
+
+
+.scorebd {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+    color: #664d03;
+}
+
+.memberStart {
+    margin: 0 auto;
+    margin-top: 30px;
+    width: 168px;
+    height: 24px;
+}
+
+.scorepoint {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.scorepoint p {
+    padding-top: 20px;
+    margin-right: 24px;
+}
+
+.scorecomment {
+    border: 1px solid #DEE2E6;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 24px;
+}
+
+.casecardcontainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+.memberscore-overlay {
+    z-index: 9999;
+}
+
+
+
+@media (max-width: 992px) {
+    .commentitem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .scorebd {
+        flex-direction: column;
+
+    }
+
+
+
+}

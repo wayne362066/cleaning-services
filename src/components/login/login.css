@@ -1,0 +1,176 @@
+
+ol,
+ul {
+    list-style: none;
+}
+
+.loginContainer {
+    width: 80%;
+    border-radius: 30px;
+    padding: 48px;
+    margin: 0 auto;
+    background-color: #FFFEF9;
+    border: 1px solid #FFC107;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+/* 
+.loginrightbox {
+    border-radius: 30px;
+    padding: 48px;
+    background-color: #FFFEF9;
+    border: 1px solid #FFC107;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+} */
+
+.loginrightbox p {
+    margin-right: 12px;
+    margin-top: 12px;
+}
+
+.loginrightbox li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+.loginrightbox select {
+    margin: 0px 12px 0px 12px;
+
+}
+
+.loginimg {
+    width: 200px;
+}
+
+.loginicon {
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+}
+
+
+
+.loginli {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 24px;
+
+}
+
+.loginContainer p {
+    margin: 4px 12px 4px 12px;
+}
+
+.loginContainer input {
+    margin: 4px 12px 4px 12px;
+
+}
+
+input::placeholder {
+    font-size: 16px;
+    color: #ADB5BD;
+
+}
+
+.signupbtn {
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #FFC107;
+    color: #664D03;
+}
+
+.cancelbtn {
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #FFF3CD;
+    color: #664D03;
+}
+
+button {
+    background-color: #FFFEF9;
+    border: 1px solid #FFFEF9;
+    color: #664D03;
+    margin: 12px;
+}
+
+.revisebtn {
+    width: 60px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    color: #FFC107;
+    border: 1px solid #FFC107;
+}
+
+.loginTab {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.switchp {
+    margin-bottom: 48px;
+}
+
+
+.tabbtn.active {
+    border-bottom: 2px solid #FFC107;
+}
+
+
+.loginflex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginbg {
+    background-image: url(../../../public/images/loginin-bg.png);
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-position: center bottom;
+    width: 100%;
+}
+
+.membercontainer{
+    border-radius: 30px;
+    padding: 48px;
+    background-color: #FFFEF9;
+    border: 1px solid #FFC107;
+    width: 100%;
+}
+
+
+.loginclass {
+    width: 100%;
+    background-color: #FFC107;
+}
+
+/* Rwd */
+
+@media (max-width: 997px) {
+    .membercontainer {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+
+    }
+
+    .loginrightbox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    
+    }
+
+
+  }
