@@ -109,9 +109,11 @@ const Step2Area = () => {
   return (
     <form className="container d-flex  justify-content-center align-items-center flex-column">
       <div className="d-flex container justify-content-center align-items-center book-step1">
-        <div className="left">
+        <div className="left show-form">
           <div className="step2Top">
-            <h5>1. 選擇服務時間</h5>
+            <h5 className="heading" data-number="01">
+              <span>選擇服務時間</span>
+            </h5>
             <div className="chooseTime">
               {weekMode.map((week, index) => (
                 <div
@@ -136,7 +138,9 @@ const Step2Area = () => {
             </div>
           </div>
           <div className="step2Bottom">
-            <h5>2. 選擇服務時段</h5>
+            <h5 className="heading " data-number="02">
+              <span>選擇服務時段</span>
+            </h5>
             <div className="chooseTime">
               {timeMode.map((t, index) => (
                 <div
@@ -156,7 +160,7 @@ const Step2Area = () => {
             </div>
           </div>
         </div>
-        <div className="right">
+        <div className="right show-form">
           <MyCalendar freeDays={dayMode} />
         </div>
       </div>

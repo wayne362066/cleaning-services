@@ -91,14 +91,6 @@ const MemberInfo = (props) => {
             <th>地區</th>
             <th>地址</th>
           </tr>
-          <tr id="orderTh_RWD">
-            <th>會員編號</th>
-            <th>姓名</th>
-            <th>連絡電話</th>
-            <th>縣市</th>
-            <th>地區</th>
-            <th>地址</th>
-          </tr>
         </thead>
         <tbody className="orderTbody">
           {searchInput.length > 1

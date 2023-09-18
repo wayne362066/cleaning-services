@@ -12,20 +12,20 @@ const StaffListInfo = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   // 編輯變數
-  const [upName, setUpName] = useState("")
-  const [upPhone, setUpPhone] = useState("")
-  const [upEmail, setUpEmail] = useState("")
-  const [upVaccine, setUpVaccine] = useState("")
-  const [upGoodid, setUpGoodid] = useState("")
-  const [upRacheck, setUpRacheck] = useState("")
-  const [upPassWord, setUpPassWord] = useState("")
-  const [upIdnumber, setUpIdnumber] = useState("")
-  const [upBirthday, setUpBirthday] = useState("")
-  const [upRural, setUpRural] = useState("")
-  const [upAddress, setUpAddress] = useState("")
-  const [changePW, setchangePW] = useState(true)//變更密碼
-  const [addressAPI, setAddressAPI] = useState("")
-  const [useridarr, setUserIdArr] = useState("")
+  const [upName, setUpName] = useState("");
+  const [upPhone, setUpPhone] = useState("");
+  const [upEmail, setUpEmail] = useState("");
+  const [upVaccine, setUpVaccine] = useState("");
+  const [upGoodid, setUpGoodid] = useState("");
+  const [upRacheck, setUpRacheck] = useState("");
+  const [upPassWord, setUpPassWord] = useState("");
+  const [upIdnumber, setUpIdnumber] = useState("");
+  const [upBirthday, setUpBirthday] = useState("");
+  const [upRural, setUpRural] = useState("");
+  const [upAddress, setUpAddress] = useState("");
+  const [changePW, setchangePW] = useState(true); //變更密碼
+  const [addressAPI, setAddressAPI] = useState("");
+  const [useridarr, setUserIdArr] = useState("");
 
   //接收資料
   useEffect(() => {
@@ -36,42 +36,45 @@ const StaffListInfo = () => {
         );
         setStaffData(result.data.data[0]); //員工資料
         setStaffListData(result.data.list); //訂單紀錄
-        setUpName(result.data.data[0].employeename)
-        setUpPhone(result.data.data[0].employeephone)
-        setUpEmail(result.data.data[0].employeeemail)
-        setUpVaccine(result.data.data[0].vaccine)
-        setUpGoodid(result.data.data[0].goodid)
-        setUpRacheck(result.data.data[0].racheck)
-        setUpPassWord(result.data.newPW)
-        setUpIdnumber(result.data.data[0].employeeidnumber)
-        setUpBirthday(result.data.data[0].employeebirthday)
-        setUpRural(result.data.data[0].emprural)
-        setUpAddress(result.data.data[0].empaddress)
-        setAddressAPI(result.data.address)
-        setUserIdArr(()=>{
-          const arr=result.data.useridarr.map((obj)=>obj.employeeid)
-          return arr
-        })
-
+        setUpName(result.data.data[0].employeename);
+        setUpPhone(result.data.data[0].employeephone);
+        setUpEmail(result.data.data[0].employeeemail);
+        setUpVaccine(result.data.data[0].vaccine);
+        setUpGoodid(result.data.data[0].goodid);
+        setUpRacheck(result.data.data[0].racheck);
+        // setUpPassWord(result.data.data[0].employeepw);
+        setUpIdnumber(result.data.data[0].employeeidnumber);
+        setUpBirthday(
+          new Date(result.data.data[0].employeebirthday).toLocaleDateString(
+            "en-CA"
+          )
+        );
+        setUpRural(result.data.data[0].emprural);
+        setUpAddress(result.data.data[0].empaddress);
+        setAddressAPI(result.data.address);
+        setUserIdArr(() => {
+          const arr = result.data.useridarr.map((obj) => obj.employeeid);
+          return arr;
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
     fetchData();
   }, [employeeid]);
-
-     //   上一頁
-    const prevStaffClick = () => {
-      const data = useridarr[useridarr.indexOf(employeeid)-1]
-      const res = data ? data : employeeid
-      navigate(`/dashboard/StaffList/${res}`)
-    }
-    //   下一頁
-    const nextStaffClick = () => {
-      const data = useridarr[useridarr.indexOf(employeeid)+1]
-      const res = data ? data : employeeid
-      navigate(`/dashboard/StaffList/${res}`)
-    }
+  
+  //   上一頁
+  const prevStaffClick = () => {
+    const data = useridarr[useridarr.indexOf(employeeid) - 1];
+    const res = data ? data : employeeid;
+    navigate(`/dashboard/StaffList/${res}`);
+  };
+  //   下一頁
+  const nextStaffClick = () => {
+    const data = useridarr[useridarr.indexOf(employeeid) + 1];
+    const res = data ? data : employeeid;
+    navigate(`/dashboard/StaffList/${res}`);
+  };
 
   // 資料更新送出
   async function handleSendEdit() {
@@ -89,7 +92,7 @@ const StaffListInfo = () => {
           upIdnumber: upIdnumber,
           upBirthday: upBirthday,
           upRural: upRural,
-          upAddress: upAddress
+          upAddress: upAddress,
         }
       );
       window.location.reload();
@@ -104,82 +107,187 @@ const StaffListInfo = () => {
     if (confirmDelete) {
       try {
         navigate(`/dashboard/StaffList`);
-        await axios.delete(`http://localhost:4107/dashboard/StaffList/delete/${employeeid}`);
+        await axios.delete(
+          `http://localhost:4107/dashboard/StaffList/delete/${employeeid}`
+        );
       } catch (error) {
         console.error("Error deleting data:", error);
       }
     }
   }
 
-  const { employeename, employeephone, employeeemail, photo, vaccine, goodid, racheck, cases, employeepw, employeebirthday, empcity, emprural, empaddress, employeeidnumber } =
-    staffData;
+  const {
+    employeename,
+    employeephone,
+    employeeemail,
+    photo,
+    vaccine,
+    goodid,
+    racheck,
+    cases,
+    employeepw,
+    employeebirthday,
+    empcity,
+    emprural,
+    empaddress,
+    employeeidnumber,
+  } = staffData;
 
-  const btd = new Date(employeebirthday).toLocaleDateString('en-CA')
-
+  const btd = new Date(employeebirthday).toLocaleDateString("en-CA");
+  console.log(upBirthday);
   return (
     <div>
       <div className="Container">
         <h3 className="orderh3">員工資料</h3>
         <div className="orderContainer">
-          {edit ? <h5 className="orderContent">
-            <ol>
-              <img src={photo} alt="asd" style={{ width: "130px" }} />
-              <li>員工編號:</li>
-              <li><input type="text" defaultValue={employeeid} disabled={true} /></li>
-              <li>疫苗接種:</li>
-              <li><input
-                type="checkbox"
-                defaultChecked={upVaccine === 1}
-                onChange={(e) => { setUpVaccine(e.target.checked ? 1 : 0); }}
-                required={true}
-              />接種疫苗</li>
-              <li>良民證:</li>
-              <li><input
-                type="checkbox"
-                checked={upGoodid === 1}
-                onChange={(e) => { setUpGoodid(e.target.checked ? 1 : 0); }}
-                required={true}
-              />無犯罪紀錄</li>
-              <li>racheck:</li>
-              <li><input
-                type="checkbox"
-                defaultChecked={upRacheck === 1}
-                onChange={(e) => { setUpRacheck(e.target.checked ? 1 : 0); }}
-                required={true}
-              />是否認證</li>
-              <li>案件數:</li>
-              <li><input type="number" defaultValue={cases} disabled={true} /></li>
-            </ol>
-            <ol>
-              <li>員工姓名:</li>
-              <li><input type="text" defaultValue={employeename} onChange={(e) => setUpName(e.target.value)} pattern=".{2,20}" required={true} /></li>
-              <li>E-mail:</li>
-              <li><input type="email" defaultValue={employeeemail} onChange={(e) => setUpEmail(e.target.value)} required={true} /></li>
-              <li>密碼:</li>
-              <li>{changePW ?
-                <input type="button" value={"新密碼"} onClick={() => setchangePW(!changePW)} /> :
-                <input type="password" placeholder="數字,大小寫英文,6-12個密碼"  onChange={(e) => setUpPassWord(e.target.value)} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$" required={true} />}</li>
-              <li>聯絡方式:</li>
-              <li><input type="tel" defaultValue={employeephone} onChange={(e) => setUpPhone(e.target.value)} pattern="^09[0-9]{8}$" required={true} /></li>
-              <li>地址:</li>
-              <li><input type="text" defaultValue={empcity} disabled={true} />
-                <select defaultValue={upRural} required={true} onChange={(e) => setUpRural(e.target.value)} >
-                  {addressAPI.map((item, index) => {
-                    return (
-                      <option value={item.dist} key={index}>
-                        {item.dist}
-                      </option>
-                    );
-                  })}
-                </select> <input type="text" defaultValue={empaddress} onChange={(e) => setUpAddress(e.target.value)} required={true} /></li>
-              <li>身分證字號:</li>{/* 假驗證 */}
-              <li><input type="text" defaultValue={employeeidnumber} onChange={(e) => setUpIdnumber(e.target.value)} pattern="^[A-Za-z]\d{9}$" required={true} /></li>
-              <li>出生年月日:</li>
-              <li><input type="date" defaultValue={btd} onChange={(e) => setUpBirthday(e.target.value)} /></li>
-
-            </ol>
-          </h5>
-            : <h5 className="orderContent">
+          {edit ? (
+            <div className="orderContent">
+              <ol>
+                <img src={photo} alt="asd" style={{ width: "130px" }} />
+                <li>員工編號:</li>
+                <li>
+                  <input
+                    type="text"
+                    defaultValue={employeeid}
+                    disabled={true}
+                  />
+                </li>
+                <li>疫苗接種:</li>
+                <li>
+                  <input
+                    type="checkbox"
+                    defaultChecked={upVaccine === 1}
+                    onChange={(e) => {
+                      setUpVaccine(e.target.checked ? 1 : 0);
+                    }}
+                    required={true}
+                  />
+                  接種疫苗
+                </li>
+                <li>良民證:</li>
+                <li>
+                  <input
+                    type="checkbox"
+                    checked={upGoodid === 1}
+                    onChange={(e) => {
+                      setUpGoodid(e.target.checked ? 1 : 0);
+                    }}
+                    required={true}
+                  />
+                  無犯罪紀錄
+                </li>
+                <li>racheck:</li>
+                <li>
+                  <input
+                    type="checkbox"
+                    defaultChecked={upRacheck === 1}
+                    onChange={(e) => {
+                      setUpRacheck(e.target.checked ? 1 : 0);
+                    }}
+                    required={true}
+                  />
+                  是否認證
+                </li>
+                <li>案件數:</li>
+                <li>
+                  <input type="number" defaultValue={cases} disabled={true} />
+                </li>
+              </ol>
+              <ol>
+                <li>員工姓名:</li>
+                <li>
+                  <input
+                    type="text"
+                    defaultValue={employeename}
+                    onChange={(e) => setUpName(e.target.value)}
+                    pattern=".{2,20}"
+                    required={true}
+                  />
+                </li>
+                <li>E-mail:</li>
+                <li>
+                  <input
+                    type="email"
+                    defaultValue={employeeemail}
+                    onChange={(e) => setUpEmail(e.target.value)}
+                    required={true}
+                  />
+                </li>
+                <li>密碼:</li>
+                <li>
+                  {changePW ? (
+                    <input
+                      type="button"
+                      value={"新密碼"}
+                      onClick={() => setchangePW(!changePW)}
+                    />
+                  ) : (
+                    <input
+                      type="password"
+                      placeholder="數字,大小寫英文,6-12個密碼"
+                      defaultValue={""}
+                      onChange={(e) => setUpPassWord(e.target.value)}
+                      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$"
+                      required={true}
+                    />
+                  )}
+                </li>
+                <li>聯絡方式:</li>
+                <li>
+                  <input
+                    type="tel"
+                    defaultValue={employeephone}
+                    onChange={(e) => setUpPhone(e.target.value)}
+                    pattern="^09[0-9]{8}$"
+                    required={true}
+                  />
+                </li>
+                <li>地址:</li>
+                <li>
+                  <input type="text" defaultValue={empcity} disabled={true} />
+                  <select
+                    defaultValue={upRural}
+                    required={true}
+                    onChange={(e) => setUpRural(e.target.value)}
+                  >
+                    {addressAPI.map((item, index) => {
+                      return (
+                        <option value={item.dist} key={index}>
+                          {item.dist}
+                        </option>
+                      );
+                    })}
+                  </select>{" "}
+                  <input
+                    type="text"
+                    defaultValue={empaddress}
+                    onChange={(e) => setUpAddress(e.target.value)}
+                    required={true}
+                  />
+                </li>
+                <li>身分證字號:</li>
+                {/* 假驗證 */}
+                <li>
+                  <input
+                    type="text"
+                    defaultValue={employeeidnumber}
+                    onChange={(e) => setUpIdnumber(e.target.value)}
+                    pattern="^[A-Za-z]\d{9}$"
+                    required={true}
+                  />
+                </li>
+                <li>出生年月日:</li>
+                <li>
+                  <input
+                    type="date"
+                    defaultValue={upBirthday}
+                    onChange={(e) => setUpBirthday(e.target.value)}
+                  />
+                </li>
+              </ol>
+            </div>
+          ) : (
+            <div className="orderContent">
               <ol>
                 <img src={photo} alt="asd" style={{ width: "130px" }} />
                 <li>員工編號:</li>
@@ -209,17 +317,33 @@ const StaffListInfo = () => {
                 <li>出生年月日:</li>
                 <li>{btd}</li>
               </ol>
-            </h5>}
-          {/* 視窗開關 */}
-          {edit ?
-            <div
-              style={{ position: "relative", width: "100%", textAlign: "center" }}>
-              <button className="btn btn-secondary" onClick={() => setEdit(!edit)}>取消編輯</button>
-              <button className="btn btn-primary" onClick={handleSendEdit}>完成編輯</button>
-              <br />
-              <button className="btn btn-danger" onClick={deleteInfo}>刪除此資料</button>
             </div>
-            : <div>
+          )}
+          {/* 視窗開關 */}
+          {edit ? (
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              <button
+                className="btn btn-secondary"
+                onClick={() => setEdit(!edit)}
+              >
+                取消編輯
+              </button>
+              <button className="btn btn-primary" onClick={handleSendEdit}>
+                完成編輯
+              </button>
+              <br />
+              <button className="btn btn-danger" onClick={deleteInfo}>
+                刪除此資料
+              </button>
+            </div>
+          ) : (
+            <div>
               <button
                 className="btn btn-success"
                 onClick={() => {
@@ -228,8 +352,14 @@ const StaffListInfo = () => {
               >
                 員工歷史訂單
               </button>
-              <button className="btn btn-primary" onClick={() => setEdit(!edit)}>編輯資料</button>
-            </div>}
+              <button
+                className="btn btn-primary"
+                onClick={() => setEdit(!edit)}
+              >
+                編輯資料
+              </button>
+            </div>
+          )}
 
           {/* 彈跳視窗 */}
           {isOpen && (

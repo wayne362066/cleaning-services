@@ -5,21 +5,6 @@ import "../../components/member/member.css";
 const Member = () => {
   const { ornumber } = useParams();
   const [orderData, setOrderData] = useState({});
-  //接收資料
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const result = await axios.get(
-          `http://localhost:4107/AdminOrder/${ornumber}`
-        );
-        setOrderData(result.data[0]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
-  }, [ornumber]);
-  console.log(orderData)
   const {
     userid,
     orname,
@@ -41,14 +26,39 @@ const Member = () => {
     donetime,
     employeename,
     employeephone,
-    employeeemail
+    employeeemail,
   } = orderData;
+
+  async function handleOrderUpdata(data) {
+    try {
+      await axios.put(`http://localhost:4107/AdminOrder/updata/${ornumber}`, {
+        data,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  //接收資料
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await axios.get(
+          `http://localhost:4107/AdminOrder/${ornumber}`
+        );
+        setOrderData(result.data[0]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, [ornumber]);
 
   const handleOrderStatus = (state) => {
     if (state === 0) {
       return "新訂單";
     } else if (state === 1) {
-      return "未完成";
+      return "進行中";
     }
     return "已完成";
   };
@@ -62,30 +72,23 @@ const Member = () => {
     return "18:00";
   };
 
-  async function handleOrderUpdata() {
-    try {
-      const result = await axios.put(
-        "http://localhost:4107/AdminOrder/updata",
-        { orderData }
-      );
-      console.log(result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }
-
   return (
     <div>
       <div className="Container">
         <h3 className="orderh3">管理訂單</h3>
-        <div className={`orderContainer bgdone ${state === 2 ? 'complete' : ''}`}>
+        <div
+          className={`orderContainer bgdone ${state === 2 ? "complete" : ""}`}
+        >
           <div className="orderContent">
             <table border={1}>
               <tr>
                 <th style={{ fontWeight: "600" }}>
                   <Link
                     to={`/dashboard/PersonalInfo/${userid}`}
-                    className="Link-decoration">訂購人資料</Link>
+                    className="Link-decoration"
+                  >
+                    訂購人資料
+                  </Link>
                 </th>
               </tr>
               <tr>
@@ -106,7 +109,10 @@ const Member = () => {
                 <th style={{ fontWeight: "600" }}>
                   <Link
                     to={`/dashboard/StaffList/${employeeid}`}
-                    className="Link-decoration">清潔員</Link>
+                    className="Link-decoration"
+                  >
+                    清潔員
+                  </Link>
                 </th>
               </tr>
               <tr>
@@ -131,7 +137,7 @@ const Member = () => {
             </tr>
             <tr>
               <td>訂單編號:{ornumber}</td>
-              <td>服務日期:{new Date(date).toLocaleDateString('en-CA')}</td>
+              <td>服務日期:{new Date(date).toLocaleDateString("en-CA")}</td>
             </tr>
             <tr>
               <td>訂單狀態:{handleOrderStatus(state)}</td>
@@ -153,43 +159,65 @@ const Member = () => {
               </td>
             </tr>
             <tr>
-              <td>訂單日期:{new Date(ordertime).toLocaleString('en-CA')}</td>
-              <td>完成時間:{new Date(orderdone).toLocaleString('en-CA')}</td>
+              <td>訂單日期:{new Date(ordertime).toLocaleString("en-CA")}</td>
+              <td>
+                完成時間:
+                {orderdone ? new Date(orderdone).toLocaleString("en-CA") : ""}
+              </td>
             </tr>
           </table>
-          <h5 className="orderContent">備註:{note ?? "無"}</h5>
+          <div className="orderContent">備註:{note ?? "無"}</div>
         </div>
         {/* 按鈕 */}
-        <div className="btncontain">
-          <button
-            className={weeks !== donetime ? "notClear" : ""}
-            disabled={weeks !== donetime ? true : false}
-            onClick={() => {
-              setOrderData((status) => {
-                return { ...status, state: 2 };
-              });
-              handleOrderUpdata();
-            }}
-          >
-            訂單完成
-          </button>
-          <button
-            onClick={() => {
-              setOrderData((count) => {
-                return {
-                  ...count,
+        {state !== 2 ? (
+          <div className="btncontain">
+            <button
+              className={weeks !== donetime ? "notClear" : ""}
+              disabled={weeks !== donetime ? true : false}
+              onClick={() => {
+                setOrderData((prevStatus) => ({
+                  ...prevStatus,
+                  state: 2,
+                  orderdone: new Date(orderdone).toLocaleString("en-CA"),
+                }));
+
+                handleOrderUpdata({
+                  ...orderData,
+                  state: 2,
+                  orderdone: new Date().toLocaleString("en-CA"),
+                });
+              }}
+            >
+              訂單完成
+            </button>
+            <button
+              onClick={() => {
+                setOrderData((count) => {
+                  return {
+                    ...count,
+                    donetime:
+                      count.donetime + 1 <= weeks
+                        ? count.donetime + 1
+                        : count.donetime,
+                    state:count.state=1
+                  };
+                });
+                handleOrderUpdata({
+                  ...orderData,
                   donetime:
-                    count.donetime + 1 <= weeks
-                      ? count.donetime + 1
-                      : count.donetime,
-                };
-              });
-              handleOrderUpdata();
-            }}
-          >
-            打掃完成
-          </button>
-        </div>
+                    orderData.donetime + 1 <= weeks
+                      ? orderData.donetime + 1
+                      : orderData.donetime,
+                      state:orderData.state=1
+                });
+              }}
+            >
+              打掃完成
+            </button>
+          </div>
+        ) : (
+          <div className="orderContent">訂單完成</div>
+        )}
       </div>
     </div>
   );

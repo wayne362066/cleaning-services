@@ -10,12 +10,15 @@ const AddStaff = () => {
     const [orderAPI, setOrderAPI] = useState([]);
     const [imageData, setImageData] = useState("");
     const [showAlert,setShowAlert]=useState(false)
+    
     const [nameReg, setNameReg] = useState(false);
     const [emailReg, setEmailReg] = useState(false);
     const [phoneReg, setPhoneReg] = useState(false);
     const [passWordReg, setPassWordReg] = useState(false);
     const [IDReg, setIDReg] = useState(false);
+
     const [success, setSuccess] = useState("");
+
     const [staffDate,setStaffData]=useState({
         employeeId:"",
         empLength:"",
@@ -55,22 +58,24 @@ const AddStaff = () => {
     //    送出註冊資料
    async function handleSignUp(e) {
         e.preventDefault();
-        const jsonString = JSON.stringify(staffDate)//formData.append()不能直接加入物件要轉換JSON字串
-        const formData = new FormData();
-        formData.append("data",jsonString)
-        formData.append('photo', imageData)
-        try {
-           const res= await axios.post(`http://localhost:4107/dashboard/addstaff/upload`,formData)
-
-           if (res.data.message === "failed") {
-               setSuccess("failed")
-               console.log(success)
-            }else if(res.data.message === "success"){
-                setSuccess("success")
-                console.log(success)
+        if(nameReg && emailReg && phoneReg && passWordReg && IDReg){
+            const jsonString = JSON.stringify(staffDate)//formData.append()不能直接加入物件要轉換JSON字串
+            const formData = new FormData();
+            formData.append("data",jsonString)
+            formData.append('photo', imageData)
+            try {
+               const res= await axios.post(`http://localhost:4107/dashboard/addstaff/upload`,formData)
+    
+               if (res.data.message === "failed") {
+                   setSuccess("failed")
+                }else if(res.data.message === "success"){
+                    setSuccess("success")
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
             }
-        } catch (error) {
-            console.error("Error fetching data:", error);
+        } else {
+            setSuccess("failed")
         }
     }
 
@@ -91,8 +96,8 @@ const AddStaff = () => {
     }
     
 // 正規表達驗證
-    function RexgeValid(name) {
-        return name ? <span className='text-success fs-6'><i className="bi bi-check-circle">Success</i></span>:<span className='text-danger fs-6'><i className="bi bi-x-circle">Failed</i></span>;
+    function RexgeValid(name,text="輸入格式有誤") {
+        return name ? <span className='text-success fs-6'><i className="bi bi-check-circle">Success</i></span>:<span className='text-danger fs-6'><i className="bi bi-x-circle">{text}</i></span>;
     }
 
     return (
@@ -102,29 +107,29 @@ const AddStaff = () => {
             </div>
         <form onSubmit={handleSignUp}>
             <div className="orderContainer">
-                <h5 className="orderContent">
+                <div className="orderContent">
                     <ol>
                         {/* 姓名 */}
-                        <li>員工姓名:{RexgeValid(nameReg)}</li>
+                        <li>員工姓名:{RexgeValid(nameReg,"請輸入6 ~ 10 字中英文組成")}</li>
                         <li><input type="text" name='employeeName' autoComplete="off" required onInput={formDataChange}
                         onChange={(e)=>setNameReg(validName.test(e.target.value))}/></li>
                         {/* 身分證字號 */}
-                        <li>身分證字號:{RexgeValid(IDReg)}</li>
+                        <li>身分證字號:{RexgeValid(IDReg,"身分證格式錯誤")}</li>
                         <li><input type="text" name='employeeIdNumber' autoComplete="off" required onInput={formDataChange}
                         onChange={(e)=>setIDReg(validId(e.target.value))} /></li>
                         {/* 電話 */}
-                        <li>聯絡方式:{RexgeValid(phoneReg)}</li>
+                        <li>聯絡方式:{RexgeValid(phoneReg,"請輸入手機或家用電話")}</li>
                         <li><input type="tel" name='employeePhone' autoComplete="off" required onInput={formDataChange}
                         onChange={(e)=>setPhoneReg(validTel.test(e.target.value))} /></li>
                         {/* 生日 */}
                         <li>出生年月日:</li>
                         <li><input type="date" name='employeeBirthDay' autoComplete="off" required onChange={formDataChange} /></li>
                         {/* 信箱 */}
-                        <li>E-mail:{RexgeValid(emailReg)}</li>
+                        <li>E-mail:{RexgeValid(emailReg,"請輸入正確的信箱格式")}</li>
                         <li><input type="email" name='employeeMail' autoComplete="off" required onInput={formDataChange}
                         onChange={(e)=>setEmailReg(validEmail.test(e.target.value))} /></li>
                         {/* 密碼 */}
-                        <li>密碼:{RexgeValid(passWordReg)}</li>
+                        <li>密碼:{RexgeValid(passWordReg,"請輸入6 ~ 16 字中英文組成")}</li>
                         <li><input type="password" name='employeePW' autoComplete="off" required onInput={formDataChange}
                         onChange={(e)=>setPassWordReg(validPassWord.test(e.target.value))} /></li>
                     </ol>
@@ -167,7 +172,7 @@ const AddStaff = () => {
                         <li>上傳頭像</li>
                         <li><input type="file" name='photo' accept='image/*' required  onChange={(e) => handleImagePut(e)} /></li>
                     </ol>
-                </h5>
+                </div>
                 <div
                     style={{ position: "relative", width: "100%", textAlign: "center" }}
                     >

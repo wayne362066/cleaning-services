@@ -56,15 +56,6 @@ const SidebarAdmin = () => {
             <span>會員資料</span>
           </Link>
           <Link
-            to={"/dashboard/StaffList"}
-            className="Link-decoration"
-            onClick={(e) => {
-              changeStyle(e);
-            }}
-          >
-            <span>員工資料</span>
-          </Link>
-          <Link
             to={"/dashboard/blacklist"}
             className="Link-decoration"
             onClick={(e) => {
@@ -72,6 +63,18 @@ const SidebarAdmin = () => {
             }}
           >
             <span>黑名單</span>
+          </Link>
+        </div>
+        <div>
+          <h5 className="aside-title">員工管理</h5>
+          <Link
+            to={"/dashboard/StaffList"}
+            className="Link-decoration"
+            onClick={(e) => {
+              changeStyle(e);
+            }}
+          >
+            <span>員工資料</span>
           </Link>
           <Link
             to={"/dashboard/addstaff"}

@@ -78,6 +78,12 @@
   min-width: 300px;
   border-radius: 15px;
 }
+/* RWD */
+@media screen and (max-width: 770px) {
+  .process-img {
+    display: none;
+  }
+}
 
 ul::-webkit-scrollbar {
   display: none;
@@ -89,8 +95,7 @@ ul::-webkit-scrollbar {
   width: 90%;
   margin: 0px auto;
   border-radius: 25px;
-  padding-left: 130px;
-
+  padding-left: 220px;
 }
 
 .dr b {
@@ -104,11 +109,10 @@ ul::-webkit-scrollbar {
 }
 
 .dr h1 {
-  line-height: 100px;
+  line-height: 50px;
   color: white;
-
+  margin: 30px;
 }
-
 
 .reserve {
   color: rgba(147, 126, 93, 1);
@@ -122,7 +126,7 @@ ul::-webkit-scrollbar {
 .reserve p {
   font-weight: bold;
   font-size: 28px;
-  padding: 20px
+  padding: 20px;
 }
 
 .inp {
@@ -134,24 +138,21 @@ ul::-webkit-scrollbar {
   height: 47px;
   border-radius: 8px;
   font-weight: bold;
-
 }
 
 .footer-team {
   background-color: rgba(254, 230, 156, 1);
   width: 90%;
   height: 210px;
-  margin:0 auto;
+  margin: 0 auto;
   border-radius: 25px;
   position: relative;
   top: 135px;
-
-
+  margin-bottom: 200px;
 }
 
 .footer-icon {
   list-style-type: none;
-
 }
 
 .footer-icon li {
@@ -167,7 +168,6 @@ ul::-webkit-scrollbar {
   left: 25px;
   top: 25px;
 }
-
 
 .footer-a {
   color: black;
@@ -194,7 +194,6 @@ ul::-webkit-scrollbar {
 .colo {
   color: rgba(155, 119, 0, 1);
 }
-
 
 /*RWD */
 @media (max-width: 996px) {
@@ -237,7 +236,6 @@ ul::-webkit-scrollbar {
   }
 }
 
-
 /*RWD */
 @media (max-width: 768px) {
   .footer-team {
@@ -267,7 +265,6 @@ ul::-webkit-scrollbar {
   .team {
     top: 0;
   }
-
 }
 
 @media (min-width: 997px) and (max-width: 1350px) {

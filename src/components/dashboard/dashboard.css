@@ -88,7 +88,7 @@
 }
 
 /* #################################member-style */
-.aside-main>h3 {
+.aside-main > h3 {
   color: #eaac00;
   font-family: Inter;
   font-size: 28px;
@@ -208,11 +208,11 @@
 }
 
 #orderTh_RWD {
-  transform: scale(0);
+  display: none;
 }
 
 #orderTh {
-  transform: scale(1);
+  display: contents;
 }
 
 .sideBarBtnToggle {
@@ -284,7 +284,7 @@
 
 .DashBoardAlert {
   display: flex;
-  flex-direction: column ;
+  flex-direction: column;
   justify-content: space-around;
   width: 12em;
   height: 6em;
@@ -300,14 +300,17 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.DashBoardAlert-shell{
-  position:fixed;
+.DashBoardAlert-shell {
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff8e1a0;
   width: 100cqmax;
-  height:100cqmax;
+  height: 100cqmax;
+}
+.h3_DEF {
+  display: none;
 }
 
 @media screen and (max-width: 997px) {
@@ -365,17 +368,17 @@
     gap: 0px;
   }
 
-  .dashOrder>h3 {
+  .dashOrder > h3 {
     margin: 0;
     line-height: 0.5;
   }
 
   #orderTh {
-    transform: scale(0);
+    display: none;
   }
 
   #orderTh_RWD {
-    transform: scale(1);
+    display: contents;
   }
 
   .orderThead,
@@ -385,7 +388,7 @@
     font-family: Inter;
     font-size: 14px;
     font-weight: 400;
-    line-height: normal;
+    line-height: 5;
     text-align: center;
   }
 
@@ -395,7 +398,7 @@
   }
   .DashBoardAlert {
     display: flex;
-    flex-direction: column ;
+    flex-direction: column;
     justify-content: space-around;
     width: 12em;
     height: 6em;
@@ -409,5 +412,18 @@
     border: 2px solid #997404;
     padding: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  .h3_RWD {
+    display: none;
+  }
+  .h3_DEF {
+    display: block;
+    color: #eaac00;
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+    margin-left: auto;
   }
 }

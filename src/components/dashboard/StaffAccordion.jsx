@@ -20,8 +20,7 @@ function StaffAccordion({ staffListData, active, onClick }) {
     pay,
     ordertime,
     orderdone,
-    state,
-    note//備註
+    state
   } = staffListData;
 
   // 判斷訂單狀態
@@ -29,14 +28,14 @@ function StaffAccordion({ staffListData, active, onClick }) {
     if (state === "0") {
       return "新訂單";
     } else if (state === "1") {
-      return "未完成";
+      return "進行中";
     }
     return "已完成";
   };
 
   // 時間格式化
   const ordt = new Date(ordertime).toLocaleString()
-  const ordd = new Date(orderdone).toLocaleString()
+  const ordd =orderdone? new Date(orderdone).toLocaleString():null
 
   return (
     <div

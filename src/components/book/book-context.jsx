@@ -11,7 +11,7 @@ const BookContext = React.createContext({
   name: null,
   phone: null,
   email: null,
-  city: "台中市",
+  city: "臺中市",
   rural: "中區",
   address: null,
   note: null,

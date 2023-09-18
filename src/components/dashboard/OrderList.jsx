@@ -16,11 +16,14 @@ const OrderList = (props) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios.get("http://localhost:4107/orderlist");
+        const result = await axios.get("http://localhost:4107/orderlist",{
+          withCredentials: true
+        });
         setOrderAPI(() => {
-          return result.data.sort(function (a, b) {
-            return a.state >= b.state ? 1 : -1;
-          });
+          return result.data.filter((data) => data.state === 0)
+          // return result.data.sort(function (a, b) {
+          //   return a.state >= b.state ? 1 : -1;
+          // });
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -55,7 +58,7 @@ const OrderList = (props) => {
     if (state === 0) {
       return "新訂單";
     } else if (state === 1) {
-      return "未完成";
+      return "進行中";
     }
     return "已完成";
   };
@@ -95,22 +98,22 @@ const OrderList = (props) => {
         <thead className="orderThead">
           <tr id="orderTh">
             <th>訂單編號</th>
-            <th>會員編號</th>
+            <th>員工編號</th>
             <th>訂單日期</th>
             <th>清潔週數</th>
             <th>剩餘次數</th>
             <th>訂單金額</th>
             <th>訂單狀態</th>
           </tr>
-          <tr id="orderTh_RWD">
-            <th>No.</th>
-            <th>ID</th>
-            <th>Date</th>
-            <th>WoT</th>
-            <th>WoA</th>
-            <th>Price</th>
-            <th>status</th>
-          </tr>
+          {/* <tr id="orderTh_RWD">
+            <th>Order No.</th>
+            <th>員工編號</th>
+            <th>訂單日期</th>
+            <th>清潔週數</th>
+            <th>剩餘次數</th>
+            <th>訂單金額</th>
+            <th>訂單狀態</th>
+          </tr> */}
         </thead>
         <tbody className="orderTbody">
           {searchInput.length > 1
@@ -137,7 +140,7 @@ const OrderList = (props) => {
                       <td>{employeeid}</td>
                       <td>{new Date(ordertime).toLocaleDateString('en-CA')}</td>
                       <td>{weeks}週</td>
-                      <td>{donetime}次</td>
+                      <td>{`${weeks-donetime}次`}</td>
                       <td>{money}</td>
                       <td>{handleOrderStatus(state)}</td>
                     </tr>
@@ -167,7 +170,7 @@ const OrderList = (props) => {
                       <td>{employeeid}</td>
                       <td>{new Date(ordertime).toLocaleDateString('en-CA')}</td>
                       <td>{weeks}週</td>
-                      <td>{donetime}次</td>
+                      <td>{`${weeks-donetime}次`}</td>
                       <td>{money}</td>
                       <td>{handleOrderStatus(state)}</td>
                     </tr>

@@ -31,6 +31,7 @@ import OrderDone from "./components/dashboard/OrderDone";
 import LoginPage from "./components/login/LoginPage";
 import Memberlogin from "./components/login/Memberlogin";
 import ChangePwd from "./components/login/ChangePwd";
+import OrderMemberDone from "./components/dashboard/OrderMemberDone"
 function App() {
   return (
     <BrowserRouter>
@@ -66,7 +67,9 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute isAuthorised={true}>
+            <ProtectedRoute
+            admin="staffAdmin"
+            >
               <Dashboard />
             </ProtectedRoute>
           }
@@ -96,17 +99,18 @@ function App() {
           <Route path="/dashboard/addstaff" element={<AddStaff />} />
         </Route>
         <Route path="*" element={<Error />} />
-        <Route path="/member/" element={<Member />}>
+        <Route path="/member/" element={
+            <ProtectedRoute
+            admin="memberAdmin"
+            >
+              <Member />
+            </ProtectedRoute>
+          }>
           <Route index="/member/" element={<Order />} />
+          <Route path="/member/orderdone" element={<OrderMemberDone />} />
           <Route path="/member/:orderNumber" element={<OrderDone />} />
           <Route path="/member/memberinfo" element={<Memberlogin />} />
-          <Route path="/member/memberinfo/:userid"
-          element={<Memberlogin />} 
-          />
           <Route path="/member/changepwd" element={<ChangePwd />} />
-          <Route path="/member/changepwd/:userid" 
-          element={<ChangePwd />} 
-          />
         </Route>
       </Routes>
     </BrowserRouter>

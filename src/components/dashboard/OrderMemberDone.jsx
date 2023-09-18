@@ -3,7 +3,7 @@ import "./order.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Order = () => {
+const OrderMemberDone = () => {
   const limitCount = 4;
   const [number, setNumber] = useState(limitCount);
   const [start, setStart] = useState(0); //從哪開始
@@ -20,17 +20,16 @@ const Order = () => {
         });
         if (Array.isArray(result.data)) {
           setOrderAPI(() => {
-            return result.data.filter((data) => data.state === 0)
+            return result.data.filter((data) => data.state === 2)
             // return result.data.sort(function (a, b) {
             //   return a.state >= b.state ? 1 : -1;
             // });
           });
-          
         } else {
           console.error("Received non-array data from the API.");
         }
         setOrderAPI(() => {
-          return result.data;
+          return result.data.filter((data) => data.state === 2);
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -58,12 +57,12 @@ const Order = () => {
     setNumber(start + limitCount < data.length ? number + limitCount : number);
     setStart(start + limitCount < data.length ? start + limitCount : start);
   };
-
+  
   return (
     <>
-    <h3 className="m-0 h3_DEF">處理中訂單</h3>
+    <h3 className="m-0 h3_DEF">歷史訂單</h3>
     <div className="dashOrder">
-    <h3 className="m-0 h3_RWD">處理中訂單</h3>
+      <h3 className="m-0 h3_RWD">歷史訂單</h3>
       <div className="orderInfo">
         <span className="orderCard">
           <img src="/images/order.png" alt=""  className="animated-image"/>
@@ -169,7 +168,7 @@ const Order = () => {
         </button>
       </div>
     </div>
-    </>);
+ </> );
 };
 
-export default Order;
+export default OrderMemberDone;

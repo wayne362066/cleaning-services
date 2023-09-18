@@ -17,7 +17,6 @@ const Book1 = () => {
         withCredentials: true,
       });
       ctx.user = userInfo.data.data.user[0];
-      console.log(ctx);
     } catch (err) {
       navigate("/loginpage");
     }

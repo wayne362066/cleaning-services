@@ -50,7 +50,10 @@ const Accepting = () => {
                 </div>
                 <div className="Accepting-fee"><h3 className="Accepting-title">服務費用 Service Area</h3>
                     <img src="images/flower.png" alt="flower" />
-                    <p>每小時 500元  優惠()</p>
+                    <p>原價 : 一小時500元 / 一周一次2000元<br />
+                    優惠 : 一次訂購8週(含)以上打<span style={{color:"red"}}>9折</span>、16週(含)以上打<span style={{color:"red"}}>8折</span></p>
+    
+                    
                 </div>
             </div>
             <Footer />

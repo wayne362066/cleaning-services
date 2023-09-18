@@ -99,7 +99,7 @@ const Step4Area = () => {
     <>
       <form className="container d-flex  justify-content-center align-items-center flex-column">
         <div className="d-flex container justify-content-center align-items-center book-step1">
-          <div className="left book4-left">
+          <div className="left book4-left show-form">
             <table id="book4-order">
               <tr>
                 <th colspan="2">訂單內容</th>
@@ -128,8 +128,8 @@ const Step4Area = () => {
               </tr>
             </table>
           </div>
-          <div className="right">
-            <div className="book4-pay">
+          <div className="right show-form">
+            <div className="book4-pay ">
               <div className="payMethod">
                 <label htmlFor="pay-method">付款方式</label>
                 <select name="payMethod" id="pay-method">
@@ -183,6 +183,7 @@ const Step4Area = () => {
                       type="text"
                       placeholder="MM/YY"
                       pattern="(0[1-9]|1[0-2])/(2[3-9]|3[0-9])"
+                      maxLength={5}
                       required
                     />
                     <label htmlFor="securityCode">背面末三碼</label>
@@ -191,6 +192,7 @@ const Step4Area = () => {
                       type="text"
                       placeholder="***"
                       pattern="[0-9]{3}"
+                      maxLength={3}
                       required
                     />
                   </div>
@@ -198,7 +200,7 @@ const Step4Area = () => {
               </div>
             </div>
           </div>
-          <div className="book4-comment">
+          <div className="book4-comment show-form">
             <input type="checkbox" name="isAgree" id="agree" required />
             我已閱讀 <u>非清潔服務範圍</u>、<u>取消或更改服務政策</u>、
             <u>服務條款</u> 及 <u>隱私權政策</u>

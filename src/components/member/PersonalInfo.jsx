@@ -11,19 +11,18 @@ const PersonalInfo = () => {
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
   // 編輯變數
-  const [upName, setUpName] = useState("")
-  const [upId, setUpId] = useState("")
-  const [upPhone, setUpPhone] = useState("")
-  const [upAddress, setUpAddress] = useState("")
-  const [upEmail, setUpEmail] = useState("")
-  const [upPassWord, setUpPassWord] = useState("")
-  const [changePW, setchangePW] = useState(true)//變更密碼
-  const [upAdmin, setUpAdmin] = useState("")
-  const [upBirthDay, setUpBirthDay] = useState("")
-  const [upRural, setUpRural] = useState("")
-  const [dist, setdist] = useState("")
-  const [useridarr, setUserIdArr] = useState("")
-
+  const [upName, setUpName] = useState("");
+  const [upId, setUpId] = useState("");
+  const [upPhone, setUpPhone] = useState("");
+  const [upAddress, setUpAddress] = useState("");
+  const [upEmail, setUpEmail] = useState("");
+  const [upPassWord, setUpPassWord] = useState("");
+  const [changePW, setchangePW] = useState(true); //變更密碼
+  const [upAdmin, setUpAdmin] = useState("");
+  const [upBirthDay, setUpBirthDay] = useState("");
+  const [upRural, setUpRural] = useState("");
+  const [dist, setdist] = useState("");
+  const [useridarr, setUserIdArr] = useState("");
 
   //接收資料
   useEffect(() => {
@@ -32,23 +31,25 @@ const PersonalInfo = () => {
         const result = await axios.get(
           `http://localhost:4107/dashboard/PersonalInfo/${userid}`
         );
-        if(result){
-        setMemberData(result.data.data[0]);
-        setWhy(result.data.why[0].why || "");
-        setUpName(result.data.data[0].name)
-        setUpId(result.data.data[0].id)
-        setUpPhone(result.data.data[0].phone)
-        setUpAddress(result.data.data[0].address)
-        setUpEmail(result.data.data[0].email)
-        setUpRural(result.data.data[0].rural)
-        setUpAdmin(result.data.data[0].admin)
-        setUpPassWord(result.data.newPW)
-        setdist(result.data.address)
-        setUpBirthDay(new Date(result.data.data[0].birthday).toLocaleDateString('en-CA'))
-        setUserIdArr(()=>{
-          const arr = result.data.len.map((obj) => obj.userid);
-          return arr
-        })
+        if (result) {
+          setMemberData(result.data.data[0]);
+          setWhy(result.data.why[0].why || "");
+          setUpName(result.data.data[0].name);
+          setUpId(result.data.data[0].id);
+          setUpPhone(result.data.data[0].phone);
+          setUpAddress(result.data.data[0].address);
+          setUpEmail(result.data.data[0].email);
+          setUpRural(result.data.data[0].rural);
+          setUpAdmin(result.data.data[0].admin);
+          setUpPassWord(result.data.newPW);
+          setdist(result.data.address);
+          setUpBirthDay(
+            new Date(result.data.data[0].birthday).toLocaleDateString("en-CA")
+          );
+          setUserIdArr(() => {
+            const arr = result.data.len.map((obj) => obj.userid);
+            return arr;
+          });
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -57,18 +58,18 @@ const PersonalInfo = () => {
     fetchData();
   }, [userid]);
 
-    //   上一頁
+  //   上一頁
   const prevPage = () => {
-    const data = useridarr[useridarr.indexOf(userid)-1]
-    const res = data ? data : userid
-    navigate(`/dashboard/PersonalInfo/${res}`)
-  }
-   //   下一頁
+    const data = useridarr[useridarr.indexOf(userid) - 1];
+    const res = data ? data : userid;
+    navigate(`/dashboard/PersonalInfo/${res}`);
+  };
+  //   下一頁
   const nextPage = () => {
-    const data = useridarr[useridarr.indexOf(userid)+1]
-    const res = data ? data : userid
-    navigate(`/dashboard/PersonalInfo/${res}`)
-  }
+    const data = useridarr[useridarr.indexOf(userid) + 1];
+    const res = data ? data : userid;
+    navigate(`/dashboard/PersonalInfo/${res}`);
+  };
 
   // 加黑名單
   function handleBlacklist() {
@@ -123,7 +124,7 @@ const PersonalInfo = () => {
           upEmail: upEmail,
           upPassWord: upPassWord,
           upAdmin: upAdmin,
-          upBirthDay: upBirthDay
+          upBirthDay: upBirthDay,
         }
       );
       window.location.reload();
@@ -138,17 +139,18 @@ const PersonalInfo = () => {
     if (confirmDelete) {
       try {
         navigate(`/dashboard/PersonalInfo`);
-        await axios.delete(`http://localhost:4107/dashboard/PersonalInfo/delete/${userid}`);
+        await axios.delete(
+          `http://localhost:4107/dashboard/PersonalInfo/delete/${userid}`
+        );
       } catch (error) {
         console.error("Error deleting data:", error);
       }
     }
   }
-  function ChangeDateType(e){
-    const btd = new Date(e.target.value).toLocaleDateString('en-CA')
-    setUpBirthDay(btd)
+  function ChangeDateType(e) {
+    const btd = new Date(e.target.value).toLocaleDateString("en-CA");
+    setUpBirthDay(btd);
   }
-
 
   const {
     name,
@@ -164,61 +166,134 @@ const PersonalInfo = () => {
     blacklist,
   } = memberData;
 
-  const btd = new Date(birthday).toLocaleDateString('en-CA')
-
+  const btd = new Date(birthday).toLocaleDateString("en-CA");
 
   return (
     <div>
       <div className="Container">
         <h3 className="orderh3">會員資料</h3>
         <div className="orderContainer">
-          {edit ? <h5 className="orderContent">
-            <ol>
-              <li>會員姓名:</li>
-              <li><input type="text" defaultValue={name} onChange={(e) => setUpName(e.target.value)} pattern=".{2,20}" required={true} /></li>
-              <li>會員編號:</li>
-              <li><input type="text" defaultValue={userid} disabled={true} /></li>
-              <li>身分證字號:</li>{/* 假驗證 */}
-              <li><input type="text" defaultValue={id} onChange={(e) => setUpId(e.target.value)} pattern="^[A-Za-z]\d{9}$" required={true} /></li>
-              <li>出生年月日:</li>
-              <li><input type="date" defaultValue={btd} onChange={(e) => ChangeDateType(e)} /></li>
-              <li>聯絡方式:</li>
-              <li><input type="tel" defaultValue={phone} onChange={(e) => setUpPhone(e.target.value)} pattern="^09[0-9]{8}$" required={true} /></li>
-            </ol>
-            <ol>
-              <li>地址:</li>
-              <li><input type="text" defaultValue={city} disabled={true} />
-                <select defaultValue={upRural} required={true} onChange={(e) => setUpRural(e.target.value)} >
-                  {dist.map((dist, index) => {
-                    return (
-                      <option value={dist.dist} key={index}>
-                        {dist.dist}
-                      </option>
-                    );
-                  })}
-                </select> <input type="text" defaultValue={address} onChange={(e) => setUpAddress(e.target.value)} required={true} /></li>
-              <li>E-mail:</li>
-              <li><input type="email" defaultValue={email} onChange={(e) => setUpEmail(e.target.value)} required={true} /></li>
-              <li>密碼:</li>
-              <li>{changePW ?
-                <input type="button" value={"新密碼"} onClick={() => setchangePW(!changePW)} /> :
-                <input type="password" placeholder="數字,大小寫英文,6-12個密碼" onChange={(e) => setUpPassWord(e.target.value)} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$" required={true} />}</li>
-              <li>權限:</li>
-              <li><select defaultValue={admin} onChange={(e) => setUpAdmin(e.target.value)}>
-                <option value="0">一般會員</option>
-                <option value="1">管理者</option>
-              </select></li>
-              <li>黑名單:</li>
-              <li>
-                {blacklist ? (
-                  <span className="text-danger fw-bold">黑名單:{why}</span>
-                ) : (
-                  <span className="text-success fw-bold">正常用戶</span>
-                )}
-              </li>
-            </ol>
-          </h5> :
-            <h5 className="orderContent">
+          {edit ? (
+            <div className="orderContent">
+              <ol>
+                <li>會員姓名:</li>
+                <li>
+                  <input
+                    type="text"
+                    defaultValue={name}
+                    onChange={(e) => setUpName(e.target.value)}
+                    pattern=".{2,20}"
+                    required={true}
+                  />
+                </li>
+                <li>會員編號:</li>
+                <li>
+                  <input type="text" defaultValue={userid} disabled={true} />
+                </li>
+                <li>身分證字號:</li>
+                {/* 假驗證 */}
+                <li>
+                  <input
+                    type="text"
+                    defaultValue={id}
+                    onChange={(e) => setUpId(e.target.value)}
+                    pattern="^[A-Za-z]\d{9}$"
+                    required={true}
+                  />
+                </li>
+                <li>出生年月日:</li>
+                <li>
+                  <input
+                    type="date"
+                    defaultValue={btd}
+                    onChange={(e) => ChangeDateType(e)}
+                  />
+                </li>
+                <li>聯絡方式:</li>
+                <li>
+                  <input
+                    type="tel"
+                    defaultValue={phone}
+                    onChange={(e) => setUpPhone(e.target.value)}
+                    pattern="^09[0-9]{8}$"
+                    required={true}
+                  />
+                </li>
+              </ol>
+              <ol>
+                <li>地址:</li>
+                <li>
+                  <input type="text" defaultValue={city} disabled={true} />
+                  <select
+                    defaultValue={upRural}
+                    required={true}
+                    onChange={(e) => setUpRural(e.target.value)}
+                  >
+                    {dist.map((dist, index) => {
+                      return (
+                        <option value={dist.dist} key={index}>
+                          {dist.dist}
+                        </option>
+                      );
+                    })}
+                  </select>{" "}
+                  <input
+                    type="text"
+                    defaultValue={address}
+                    onChange={(e) => setUpAddress(e.target.value)}
+                    required={true}
+                  />
+                </li>
+                <li>E-mail:</li>
+                <li>
+                  <input
+                    type="email"
+                    defaultValue={email}
+                    onChange={(e) => setUpEmail(e.target.value)}
+                    required={true}
+                  />
+                </li>
+                <li>密碼:</li>
+                <li>
+                  {changePW ? (
+                    <input
+                      type="button"
+                      value={"新密碼"}
+                      onClick={() => setchangePW(!changePW)}
+                    />
+                  ) : (
+                    <input
+                      type="password"
+                      placeholder="數字,大小寫英文,6-12個密碼"
+                      defaultValue={""}
+                      onChange={(e) => setUpPassWord(e.target.value)}
+                      pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$"
+                      required={true}
+                    />
+                  )}
+                </li>
+                <li>權限:</li>
+                <li>
+                  <select
+                    defaultValue={admin}
+                    onChange={(e) => setUpAdmin(e.target.value)}
+                  >
+                    <option value="0">一般會員</option>
+                    <option value="1">管理者</option>
+                  </select>
+                </li>
+                <li>黑名單:</li>
+                <li>
+                  {blacklist ? (
+                    <span className="text-danger fw-bold">黑名單:{why}</span>
+                  ) : (
+                    <span className="text-success fw-bold">正常用戶</span>
+                  )}
+                </li>
+              </ol>
+            </div>
+          ) : (
+            <div className="orderContent">
               <ol>
                 <li>會員姓名:</li>
                 <li>{name}</li>
@@ -249,20 +324,39 @@ const PersonalInfo = () => {
                   )}
                 </li>
               </ol>
-            </h5>
-          }
-          {edit ?
+            </div>
+          )}
+          {edit ? (
             // 編輯按鈕
             <div
-              style={{ position: "relative", width: "100%", textAlign: "center" }}>
-              <button className="btn btn-secondary" onClick={() => setEdit(!edit)}>取消編輯</button>
-              <button className="btn btn-primary" onClick={handleSendEdit}>完成編輯</button>
+              style={{
+                position: "relative",
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              <button
+                className="btn btn-secondary"
+                onClick={() => setEdit(!edit)}
+              >
+                取消編輯
+              </button>
+              <button className="btn btn-primary" onClick={handleSendEdit}>
+                完成編輯
+              </button>
               <br />
-              <button className="btn btn-danger" onClick={deleteInfo}>刪除此資料</button>
+              <button className="btn btn-danger" onClick={deleteInfo}>
+                刪除此資料
+              </button>
             </div>
+          ) : (
             // 正常按鈕
-            : <div
-              style={{ position: "relative", width: "100%", textAlign: "center" }}
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                textAlign: "center",
+              }}
             >
               {addBlackList ? (
                 <div className="blacklist-content">
@@ -305,10 +399,14 @@ const PersonalInfo = () => {
                   加入黑名單
                 </button>
               )}
-              <button className="btn btn-primary" onClick={() => setEdit(!edit)}>編輯資料</button>
-
-            </div>}
-
+              <button
+                className="btn btn-primary"
+                onClick={() => setEdit(!edit)}
+              >
+                編輯資料
+              </button>
+            </div>
+          )}
         </div>
         <div className="btncontain">
           <button onClick={prevPage}>上一頁</button>

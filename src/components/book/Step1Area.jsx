@@ -6,8 +6,10 @@ import BookContext from "./book-context";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Member from "./Member";
 import Button from "./Button";
+import { scroll } from "./utils";
 
 const Step1Area = () => {
+  scroll();
   const navigate = useNavigate();
   const ctx = useContext(BookContext);
   const [membersData, setMemberData] = useState([]);
@@ -94,9 +96,9 @@ const Step1Area = () => {
 
   return (
     <form className="container d-flex  justify-content-center align-items-center flex-column">
-      <div className="d-flex container justify-content-center align-items-center book-step1">
-        <div className="left">
-          <h5>定期清掃目前僅提供一週一次的清潔頻率</h5>
+      <div className="d-flex container justify-content-center align-items-center book-step1 ">
+        <div className="left show-form">
+          <h5 className="mb-2">定期清掃目前僅提供一週一次的清潔頻率</h5>
           <div className="serviceItem">
             <div id="itemTitle">
               <h4>每週打掃一次</h4>
@@ -106,9 +108,9 @@ const Step1Area = () => {
               <p>每次派遣一位專員前往打掃</p>
             </div>
           </div>
-          <div id="chooseWeeks">
+          <div id="chooseWeeks" className="mt-4">
             <label htmlFor="serviceWeeks">
-              <h4>選擇服務週數</h4>
+              <h4 className="emphasis">選擇服務週數</h4>
             </label>
             <select name="service_weeks" id="serviceWeeks" onChange={getPrice}>
               {Array.from({ length: 21 }, (v, i) => i).map((item) => {
@@ -129,10 +131,10 @@ const Step1Area = () => {
             <div id="cleanInfo">
               {areaInfo.map((item, index) => {
                 return (
-                  <p key={index}>
+                  <p key={`area-${index}`}>
                     {item.area}
                     <OverlayTrigger
-                      key={index}
+                      key={`overlay-${index}`}
                       placement="top"
                       overlay={
                         <Tooltip
@@ -151,7 +153,7 @@ const Step1Area = () => {
             </div>
           </div>
         </div>
-        <div className="right">
+        <div className="right show-form">
           <div id="chooseMember">
             <div
               className="not-specify"
@@ -176,7 +178,7 @@ const Step1Area = () => {
                       score={p.total_efficiency}
                       name={p.employeename}
                       img={p.photo}
-                      key={index}
+                      key={`member-${index}`}
                       id={`RA${(index + 1).toString().padStart(3, 0)}`}
                     />
                   );

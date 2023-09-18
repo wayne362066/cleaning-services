@@ -45,7 +45,7 @@ const Process = () => {
         </div>
       </div>
       <div className="process-img">
-        <img src="./images/cleanpink.jpg" />
+        <img src="./images/clean2.jpg" />
       </div>
     </div>
   );

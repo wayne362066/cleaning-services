@@ -1,56 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Swiper, SwiperSlide } from "swiper/react";
 import StaffInfo from "./StaffInfo";
 import "swiper/css";
-const staffInfos = () => {
-  // 假資料
-  const staffDB = [
-    {
-      name: "林正秉",
-      covid: 0,
-      star: 4.4,
-      number: "A01",
-      caseCount: "123",
-      levle: "2",
-      img: "/images/staffInfo-staff.png",
-    },
-    {
-      name: "林正秉",
-      covid: 0,
-      star: 2.5,
-      number: "A01",
-      caseCount: "123",
-      levle: "2",
-      img: "/images/staffInfo-staff.png",
-    },
-    {
-      name: "林正秉",
-      covid: 0,
-      star: 4.4,
-      number: "A01",
-      caseCount: "123",
-      levle: "2",
-      img: "/images/staffInfo-staff.png",
-    },
-    {
-      name: "林正秉",
-      covid: 0,
-      star: 4.4,
-      number: "A01",
-      caseCount: "123",
-      levle: "2",
-      img: "/images/staffInfo-staff.png",
-    },
-    {
-      name: "林正秉",
-      covid: 0,
-      star: 4.4,
-      number: "A01",
-      caseCount: "123",
-      levle: "2",
-      img: "/images/staffInfo-staff.png",
-    },
-  ];
+
+const StaffInfos = () => {
+  const [combinedData, setCombinedData] = useState([]);
+
+  useEffect(() => {
+    Promise.all([
+      axios.get('http://localhost:4107/total/sta'),
+      axios.get('http://localhost:4107/total/modal')
+    ])
+      .then((responses) => {
+        const cardData = responses[0].data; //第一個API
+        const modalData = responses[1].data;  //第二個API
+
+        const combined = cardData.map((employee) => {
+          // 在 modalData 中尋找相同的 employeeid
+          const modalItem = modalData.find((modalEmployee) => modalEmployee.employeename === employee.employeename) || {};
+        
+          return {
+            ...employee,
+            modalData: modalItem
+          };
+        });
+
+        setCombinedData(combined); //合併後的資料
+      })
+      .catch((err) => {
+        console.error('no', err);
+      });
+  }, []);
+
   return (
     <div className="container">
       <div className="process-top staffInfo-title">
@@ -59,12 +41,9 @@ const staffInfos = () => {
       </div>
       <Swiper
         loop={false}
-        // 物件間距
         spaceBetween={0}
-        // 顯示個數
         slidesPerView={1}
         freeMode={true}
-        // 斷點
         breakpoints={{
           1200: {
             slidesPerView: 4,
@@ -80,24 +59,35 @@ const staffInfos = () => {
           },
         }}
       >
-        {staffDB.map((staffDB) => {
-          return (
-            <SwiperSlide>
-              <StaffInfo
-                name={staffDB.name}
-                covid={staffDB.covid}
-                star={staffDB.star}
-                number={staffDB.number}
-                caseCount={staffDB.caseCount}
-                levle={staffDB.levle}
-                img={staffDB.img}
-              ></StaffInfo>
-            </SwiperSlide>
-          );
-        })}
+        {combinedData.map((employee) => (
+          <SwiperSlide key={employee.employeeid}>
+            <StaffInfo
+              name={employee.employeename}  //卡片名字
+              covid={employee.vaccine}      //卡片疫苗
+              star={employee.total_efficiency}  //卡片星星數
+              number={employee.employeeid} //卡片員工編號
+              cases={employee.cases} //卡片服務件數
+              levle={employee.total_ratings} //卡片服務等級
+              img={employee.photo} 
+              goodid={employee.goodid}  //卡片良民證
+              racheck={employee.racheck} //卡片認證
+              reply={employee.modalData.reply} //modal 評價
+              orname={employee.modalData.orname} //modal 顧客名字
+              clean={employee.modalData.e2} //modal 打掃技能
+              efficiency={employee.modalData.e1} //modal 效率技能
+              careful={employee.modalData.e3} //modal 細心技能
+              manner={employee.modalData.e4}  ////modal 態度技能
+              modalphoto={employee.modalData.photo}
+              modalname={employee.modalData.employeename}
+              
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
+
+
     </div>
   );
 };
 
-export default staffInfos;
+export default StaffInfos;

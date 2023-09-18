@@ -40,7 +40,7 @@ const SidebarMember = () => {
             onClick={(e) => {
               changeStyle(e);
             }}
-            to=""
+            to={"/member"}
             className="Link-decoration"
           >
             <span>處理中</span>
@@ -49,7 +49,7 @@ const SidebarMember = () => {
             onClick={(e) => {
               changeStyle(e);
             }}
-            to=""
+            to={"/member/orderdone"}
             className="Link-decoration"
           >
             <span>歷史訂單</span>
@@ -57,24 +57,6 @@ const SidebarMember = () => {
         </div>
       </div>
     </div>
-    // <div className="aside">
-    //   <div className="aside-main">
-    //     <h3>會員專區</h3>
-    //     <div className="member">
-    //       <h5 className="aside-title aside-title-member">會員資料</h5>
-    //       <Link to=""><span>基本資料</span></Link>
-    //       <Link to=""><span>更改密碼</span></Link>
-    //     </div>
-    //     <div className="member">
-    //       <h5 className="aside-title aside-title-member">
-    //         <Link to="">訂單查詢</Link>
-    //       </h5>
-    //     </div>
-    //     <div className="member">
-    //       <h5 className="aside-title aside-title-member">歷史訂單</h5>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

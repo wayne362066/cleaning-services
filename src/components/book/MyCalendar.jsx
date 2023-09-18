@@ -40,7 +40,7 @@ function MyCalendar({ freeDays}) {
   };
   return (
     <div className="calendar-container">
-      <h5 className="mb-4">3. 選擇服務開始日期</h5>
+      <h5 className="mb-4 heading" data-number="03"><span>選擇服務開始日期</span></h5>
       <Calendar
         onClickDay={handleDateChange}
         value={null}

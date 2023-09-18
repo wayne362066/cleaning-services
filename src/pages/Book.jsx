@@ -1,4 +1,4 @@
-import Navbar from "../components/navbarIcon";
+import Navbar from "../components/navbar";
 
 import { Outlet } from "react-router-dom";
 import BookProvider from "../components/book/BookProvider";

@@ -92,15 +92,6 @@ const StaffList = (props) => {
             <th>良民證</th>
             <th>浣熊認證</th>
           </tr>
-          <tr id="orderTh_RWD">
-            <th>員工編號</th>
-            <th>姓名</th>
-            <th>連絡電話</th>
-            <th>Email</th>
-            <th>服務件數</th>
-            <th>良民證</th>
-            <th>浣熊認證</th>
-          </tr>
         </thead>
         <tbody className="orderTbody">
           {searchInput.length > 1
